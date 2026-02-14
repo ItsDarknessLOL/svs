@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz San Valentín 💕</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #ffd6e7 50%, #ffc4dd 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Corazones flotantes de fondo */
+        .floating-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        
+        .heart {
+            position: absolute;
+            color: rgba(255, 105, 180, 0.3);
+            animation: float 15s infinite ease-in-out;
+            font-size: 20px;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Contenedor principal */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeInDown 1.5s ease-out;
+        }
+        
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4.5rem;
+            background: linear-gradient(45deg, #ff1493, #ff69b4, #ff1493);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(255, 20, 147, 0.2);
+            margin-bottom: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .subtitle {
+            font-family: sans-serif;
+            font-size: 1.8rem;
+            color: #d63384;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 0.5s forwards;
+        }
+        
+        /* Sección de fotos - AHORA DESDE DIRECTORIO */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+            padding: 20px;
+        }
+        
+        .photo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.3);
+            transform: translateY(50px);
+            opacity: 0;
+            animation: slideUp 1s ease-out forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .photo-card:nth-child(1) { animation-delay: 0.2s; }
+        .photo-card:nth-child(2) { animation-delay: 0.4s; }
+        .photo-card:nth-child(3) { animation-delay: 0.6s; }
+        .photo-card:nth-child(4) { animation-delay: 0.8s; }
+        
+        .photo-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 20px 40px rgba(255, 20, 147, 0.4);
+        }
+        
+        /* Contenedor de imagen desde directorio */
+        .photo-container {
+            width: 100%;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(135deg, #ffe4ec 0%, #ffc4dd 100%);
+            border: 3px solid #ffb6c1;
+        }
+        
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-card:hover .photo-container img {
+            transform: scale(1.1);
+        }
+        
+        /* Overlay con corazón al hover */
+        .photo-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 20, 147, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .photo-card:hover .photo-overlay {
+            opacity: 1;
+        }
+        
+        .photo-overlay span {
+            font-size: 3rem;
+            animation: heartbeat 1.5s infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        
+        .photo-caption {
+            text-align: center;
+            margin-top: 15px;
+            font-family: sans-serif;
+            font-size: 1.4rem;
+            color: #c71585;
+        }
+        
+        /* Mensaje si no hay imagen */
+        .no-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #ff69b4;
+            font-size: 1rem;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .no-image-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+        
+        /* Sección de mensajes */
+        .messages-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 50px 30px;
+            margin: 40px 0;
+            box-shadow: 0 15px 35px rgba(255, 20, 147, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .messages-section::before {
+            content: '❤';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 150px;
+            opacity: 0.1;
+            color: #ff1493;
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .message-card {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe4ec 100%);
+            border-left: 5px solid #ff1493;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 0 15px 15px 0;
+            position: relative;
+            transform: translateX(-50px);
+            opacity: 0;
+            animation: slideInLeft 1s ease-out forwards;
+            transition: transform 0.3s ease;
+        }
+        
+        .message-card:nth-child(2) { animation-delay: 0.3s; }
+        .message-card:nth-child(3) { animation-delay: 0.6s; }
+        .message-card:nth-child(4) { animation-delay: 0.9s; }
+        
+        .message-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px rgba(255, 20, 147, 0.2);
+        }
+        
+        .message-text {
+            font-family: sans-serif;
+            font-size: 1.6rem;
+            color: #8b008b;
+            line-height: 1.6;
+        }
+        
+        .message-author {
+            text-align: right;
+            color: #ff1493;
+            font-style: italic;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* Botón interactivo */
+        .surprise-btn {
+            display: block;
+            margin: 40px auto;
+            padding: 20px 50px;
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-family: 'sans-serif';
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 20, 147, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .surprise-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 20, 147, 0.6);
+        }
+        
+        .surprise-btn:active {
+            transform: translateY(0);
+        }
+        
+        .surprise-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .surprise-btn:active::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Carta de amor modal */
+        .love-letter {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            animation: popIn 0.5s forwards;
+        }
+        
+        @keyframes popIn {
+            to {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+        
+        .love-letter h2 {
+            font-family: sans-serif;
+            font-size: 3rem;
+            color: #ff1493;
+            margin-bottom: 20px;
+        }
+        
+        .love-letter p {
+            font-family: sans-serif;
+            font-size: 1.4rem;
+            color: #666;
+            line-height: 1.8;
+            margin: 15px 0;
+        }
+        
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 30px;
+            background: #ff1493;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Animaciones de entrada */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .messages-section {
+                padding: 30px 20px;
+            }
+        }
+        
+        /* Efecto de brillo */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 3s linear infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        /* Instrucciones para el usuario */
+        .instructions {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #ff69b4;
+            color: #d63384;
+            font-size: 0.9rem;
+        }
+        
+        .instructions code {
+            background: #ffe4ec;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #ff1493;
+        }
+    </style>
+</head>
+<body>
+    <!-- Corazones flotantes -->
+    <div class="floating-hearts" id="heartsContainer"></div>
+    
+    <div class="container">
+        <header>
+            <h1>Feliz San Valentín</h1>
+            <p class="subtitle">Para la persona más especial de mi vida 💕</p>
+        </header>
+        
+        <!-- Galería de fotos - CARGA DESDE DIRECTORIO LOCAL -->
+        <section class="photo-gallery">
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="fotos/foto1.jpg" alt="Nuestro momento especial" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="no-image" style="display: none;">
+                        <div class="no-image-icon">📷</div>
+                        <div>fotos/foto1.jpg</div>
+                    </div>
+                    <div class="photo-overlay">
+                        <span>💖</span>
+                    </div>
+                </div>
+                <p class="photo-caption">Nuestro momento especial</p>
+            </div>
+            
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="fotos/foto2.jpg" alt="Tu sonrisa ilumina mi día" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="no-image" style="display: none;">
+                        <div class="no-image-icon">📷</div>
+                        <div>fotos/foto2.jpg</div>
+                    </div>
+                    <div class="photo-overlay">
+                        <span>💕</span>
+                    </div>
+                </div>
+                <p class="photo-caption">Tu sonrisa ilumina mi día</p>
+            </div>
+            
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="fotos/foto3.jpg" alt="Juntos por siempre" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="no-image" style="display: none;">
+                        <div class="no-image-icon">📷</div>
+                        <div>fotos/foto3.jpg</div>
+                    </div>
+                    <div class="photo-overlay">
+                        <span>💗</span>
+                    </div>
+                </div>
+                <p class="photo-caption">Juntos</p>
+            </div>
+            
+            <div class="photo-card">
+                <div class="photo-container">
+                    <img src="fotos/foto4.jpg" alt="Mi persona favorita" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="no-image" style="display: none;">
+                        <div class="no-image-icon">📷</div>
+                        <div>fotos/foto4.jpg</div>
+                    </div>
+                    <div class="photo-overlay">
+                        <span>💝</span>
+                    </div>
+                </div>
+                <p class="photo-caption">Mi persona favorita</p>
+            </div>
+        </section>
+        
+        <!-- Sección de mensajes -->
+        <section class="messages-section">
+            <div class="message-card">
+                <p class="message-text">"Eres la razón por la que sonrío al despertar y sueño al dormir. Cada día a tu lado es un regalo que atesoro con todo mi corazón."</p>
+                <p class="message-author">Con todo mi amor ❤️</p>
+            </div>
+            
+            <div class="message-card">
+                <p class="message-text">"En tu mirada encuentro paz, en tu sonrisa alegría, y en tu amor la razón para ser feliz cada día. ¡Eres mi todo!"</p>
+                <p class="message-author">Para siempre 💕</p>
+            </div>
+            
+            <div class="message-card">
+                <p class="message-text">"Amar significa compartir sueños, abrazar tus miedos y caminar juntos. Contigo cada paso es perfecto."</p>
+                <p class="message-author">Te amo más cada día 🌹</p>
+            </div>
+            
+            <div class="message-card">
+                <p class="message-text">"No necesito un día especial para amarte, pero hoy aprovecho para recordarte cuánto significas para mí. ¡Eres el mejor regalo de la vida!"</p>
+                <p class="message-author">Feliz San Valentín 💝</p>
+            </div>
+        </section>
+        
+        <!-- Botón sorpresa -->
+        <button class="surprise-btn" onclick="showLoveLetter()">💌 Abrir Carta de Amor</button>
+    </div>
+    
+    <!-- Modal de carta de amor -->
+    <div class="overlay" id="overlay" onclick="closeLoveLetter()"></div>
+    <div class="love-letter" id="loveLetter">
+        <h2>Mi Querido/a</h2>
+        <p>En este día especial quiero que sepas que...</p>
+        <p>Eres la melodía que da ritmo a mi vida, el color en mis días grises y la paz en mis noches. Cada momento contigo es un tesoro que guardo en lo más profundo de mi corazón.</p>
+        <p>Gracias por ser mi refugio, mi alegría y mi compañero/a de vida. Prometo amarte hoy, mañana y siempre.</p>
+        <p style="font-size: 2rem; margin-top: 20px;">💖 💕 💗</p>
+        <button class="close-btn" onclick="closeLoveLetter()">Cerrar con Amor</button>
+    </div>
+    
+    <script>
+        // Generar corazones flotantes
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            const heartSymbols = ['❤', '💕', '💖', '💗', '💝', '💘'];
+            
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 20000);
+            }, 800);
+        }
+        
+        createHearts();
+        
+        // Mostrar carta de amor
+        function showLoveLetter() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('loveLetter').style.display = 'block';
+            createSparkles();
+        }
+        
+        // Cerrar carta
+        function closeLoveLetter() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('loveLetter').style.display = 'none';
+        }
+        
+        // Efecto de brillos
+        function createSparkles() {
+            const letter = document.getElementById('loveLetter');
+            // Limpiar sparkles anteriores
+            const oldSparkles = letter.querySelectorAll('.sparkle');
+            oldSparkles.forEach(s => s.remove());
+            
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                letter.appendChild(sparkle);
+            }
+        }
+        
+        // Efecto de parallax suave
+        document.addEventListener('mousemove', (e) => {
+            const hearts = document.querySelectorAll('.heart');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            hearts.forEach((heart, index) => {
+                const speed = (index + 1) * 0.5;
+                heart.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
